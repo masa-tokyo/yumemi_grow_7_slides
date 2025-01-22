@@ -10,48 +10,60 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final slides = [
+      FlutterDeckSlide.title(title: 'wasmでFlutterをデプロイしてみる'),
+      // TODO(masaki): self introduction
+      FlutterDeckSlide.title(title: '自己紹介'),
+      FlutterDeckSlide.bigFact(
+        title: 'wasmのパフォーマンス良くなってきているらしい by FlutterInProduction',
+      ),
+      // TODO(masaki): add image of FlutterInProduction
+      // https://www.youtube.com/live/AEXIrThTgb0?si=BmTLG4feOAK6FC4M&t=1065
+      FlutterDeckSlide.bigFact(
+        title: 'wasm良さそう',
+      ),
+      FlutterDeckSlide.bigFact(
+        title: 'htmlレンダラー非推奨になった since 3.27',
+      ),
+      // TODO(masaki): add screenshot for html deprecation
+      // The HTML Renderer is deprecated. Do not use "--web-renderer=html".
+      // See: https://docs.flutter.dev/to/web-html-renderer-deprecation
+      FlutterDeckSlide.bigFact(
+        title: 'wasmやんなきゃ',
+      ),
+      FlutterDeckSlide.title(
+        title: 'wasmとは',
+      ),
+      // TODO(masaki): add explanation
+      // TODO(masaki): introduce the FlutterKaigi session
+      FlutterDeckSlide.title(
+        title: '手順',
+      ),
+      // TODO(masaki): describe how to deploy
+      // TODO(masaki): show expensive behaviors
+      BlankSlide(
+        title: 'Expensive behaviors',
+        route: '/expensive-behaviors',
+        builder: (context) {
+          return Center(
+            child: Text(
+              'Expensive behaviors',
+            ),
+          );
+        },
+      ),
+      // TODO(masaki): show how different, if possible
+
+      FlutterDeckSlide.title(
+        title: 'Thank you! 👋',
+      ),
+    ];
+
     return FlutterDeckApp(
-      slides: [
-        FlutterDeckSlide.title(title: 'Sample Title'),
-        FlutterDeckSlide.bigFact(
-          title: 'Big Fact',
-        ),
-        BlankSlide(
-          title: 'aaa',
-          route: '/blank-slide',
-        ),
-        FlutterDeckSlide.blank(
-          configuration: FlutterDeckSlideConfiguration(
-            route: '/expensive-behaviors',
-            // the header title is not shown
-            title: 'Expensive behaviors',
-          ),
-          builder: (context) {
-            return Center(
-              child: Text(
-                'Expensive behaviors',
-              ),
-            );
-          },
-        ).withSlideConfiguration(
-          FlutterDeckSlideConfiguration(
-              // the title is not shown
-              route: '/expensive-behaviors',
-              title: 'Expensive behaviors'),
-        ),
-        FlutterDeckSlide.title(
-          backgroundBuilder: (context) => Container(
-            color: Colors.blue,
-          ),
-          configuration: const FlutterDeckSlideConfiguration(
-            route: '/end',
-            // this title is not shown
-            title: 'Thank you!',
-            footer: FlutterDeckFooterConfiguration(showFooter: false),
-          ),
-          title: 'Thank you! 👋',
-        ),
-      ],
+      slides: List.generate(8, (index) {
+        return slides[index];
+      }),
+
       configuration: FlutterDeckConfiguration(
           // possible to show the same header on all slides
           // header:
@@ -71,10 +83,14 @@ class MainApp extends StatelessWidget {
 }
 
 class BlankSlide extends FlutterDeckSlideWidget {
-  BlankSlide({super.key, required this.route, required this.title})
-      : super(
+  BlankSlide({
+    super.key,
+    required this.route,
+    required this.title,
+    required this.builder,
+  }) : super(
           configuration: FlutterDeckSlideConfiguration(
-            route: '/blank-slide',
+            route: route,
             header: FlutterDeckHeaderConfiguration(
               title: title,
             ),
@@ -85,10 +101,12 @@ class BlankSlide extends FlutterDeckSlideWidget {
 
   final String route;
 
+  final WidgetBuilder builder;
+
   @override
   Widget build(BuildContext context) {
     return FlutterDeckSlide.blank(
-      builder: (context) => const Text('Blank Slide'),
+      builder: builder,
     );
   }
 }
