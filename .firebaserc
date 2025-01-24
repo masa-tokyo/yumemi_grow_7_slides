@@ -1,5 +1,21 @@
 {
   "projects": {
     "default": "yumemi-grow-7-slides"
-  }
+  },
+  "targets": {
+    "yumemi-grow-7-slides": {
+      "hosting": {
+        "wasm": [
+          "yumemi-grow-7-slides-wasm"
+        ],
+        "html": [
+          "yumemi-grow-7-slides-html"
+        ],
+        "canvaskit": [
+          "yumemi-grow-7-slides-canvaskit"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
