@@ -93,7 +93,7 @@ class MainApp extends StatelessWidget {
       BigFactSlide(route: '/comment-2', title: 'wasmやんなきゃ'),
       TitleSlide(route: '/definition', title: 'wasmとは'),
       SplitSlide(
-        route: '/definition/1',
+        route: '/definition-1',
         title: 'wasmとは',
         leftBuilder: (_) {
           return DefaultTextStyle(
@@ -134,7 +134,7 @@ class MainApp extends StatelessWidget {
         },
       ),
       BlankSlide(
-        route: '/definition/2',
+        route: '/definition-2',
         title: 'レンダラーの種類',
         builder: (_) {
           return DefaultTextStyle(

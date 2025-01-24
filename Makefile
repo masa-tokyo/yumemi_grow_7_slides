@@ -1,16 +1,16 @@
 
-.PHONY: host-wasm
-host-wasm:
+.PHONY: deploy-wasm
+deploy-wasm:
 	flutter build web --wasm
 	firebase deploy --only hosting:wasm
 
-.PHONY: host-html
-host-html:
+.PHONY: deploy-html
+deploy-html:
 	flutter build web --web-renderer html
 	firebase deploy --only hosting:html
 
-.PHONY: host-canvaskit
-host-canvaskit:
+.PHONY: deploy-canvaskit
+deploy-canvaskit:
 	flutter build web --web-renderer canvaskit
 	firebase deploy --only hosting:canvaskit
 
