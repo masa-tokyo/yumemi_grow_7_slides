@@ -93,7 +93,7 @@ class MainApp extends StatelessWidget {
       BigFactSlide(route: '/comment-1', title: 'wasm良さそう'),
       ImageSlide(
         route: '/fact-2',
-        title: 'htmlレンラダーが非推奨に',
+        title: 'Flutter 3.27 から...',
         imageBuilder: (_) => Image.asset(
           'assets/html_renderer.png',
         ),
