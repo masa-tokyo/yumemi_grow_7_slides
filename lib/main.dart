@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,12 @@ import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yumemi_grow_7_slides/slides/big_title_slide.dart';
 import 'package:yumemi_grow_7_slides/slides/blank_slide.dart';
+import 'package:yumemi_grow_7_slides/slides/code_highlighting_slide.dart';
 import 'package:yumemi_grow_7_slides/slides/image_slide.dart';
 import 'package:yumemi_grow_7_slides/slides/split_slide.dart';
 import 'package:yumemi_grow_7_slides/slides/title_slide.dart';
+
+final _isHtml = !isSkiaWeb;
 
 void main() {
   // TODO(masaki): consider showing this on production or not
@@ -18,6 +22,8 @@ void main() {
   print('isSkwasm: $isSkwasm');
   print('isCanvasKit : $isCanvasKit');
   print('isSkiaWeb: $isSkiaWeb');
+  print('isHtml: $_isHtml');
+
   runApp(const MainApp());
 }
 
@@ -43,12 +49,16 @@ class MainApp extends StatelessWidget {
                   Text('version: 10'),
                   CachedNetworkImage(
                     imageUrl: _headerImageUrl,
-                    // imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+                    imageRenderMethodForWeb: _isHtml
+                        ? ImageRenderMethodForWeb.HtmlImage
+                        : ImageRenderMethodForWeb.HttpGet,
                     errorWidget: (_, __, ___) => const Text('error1'),
                   ),
                   CachedNetworkImage(
                     imageUrl: 'https://placehold.jp/150x150.png',
-                    // imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+                    imageRenderMethodForWeb: _isHtml
+                        ? ImageRenderMethodForWeb.HtmlImage
+                        : ImageRenderMethodForWeb.HttpGet,
                     errorWidget: (_, __, ___) => const Text('error2'),
                   ),
                   Image.network(
@@ -188,17 +198,49 @@ class MainApp extends StatelessWidget {
           title: 'header',
           imageBuilder: (_) => Image.network(_headerImageUrl)),
 
-      ImageSlide(
-        route: '/implementation-3',
-        title: 'header',
-        imageBuilder: (context) => Image(
-          image: ExtendedNetworkImageProvider(
-            _headerImageUrl,
-            cache: true,
-          ),
-          fit: BoxFit.cover,
-        ),
-      ),
+      // ImageSlide(
+      //   route: '/implementation-X',
+      //   title: 'header',
+      //   imageBuilder: (context) => Image(
+      //     image: ExtendedNetworkImageProvider(
+      //       _headerImageUrl,
+      //       cache: true,
+      //     ),
+      //     fit: BoxFit.cover,
+      //   ),
+      // ),
+      CodeHighlightSlide(
+          route: '/implementation-3',
+          title: 'firebase hosting の場合',
+          code: ''''
+  "hosting": [
+    {
+      "target": "wasm",
+      "public": "build/web",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "headers": [
+        {
+          "source": "**/*",
+          "headers": [
+            {
+              "key": "Cross-Origin-Embedder-Policy",
+              "value": "require-corp"
+            },
+            {
+              "key": "Cross-Origin-Opener-Policy",
+              "value": "same-origin"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+''',
+          language: 'json'),
 
       // TODO(masaki): (nice-to-have) explain how to check
       // 1. bool.fromEnvironment('dart.tool.dart2wasm')
