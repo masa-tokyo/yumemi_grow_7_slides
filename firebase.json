@@ -2,11 +2,11 @@
   "hosting": [
     {
       "target": "wasm",
-      "public": "build/web_wasm",
+      "public": "build/web",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
     },
     {
-      "target": "js",
+      "target": "canvaskit",
       "public": "build/web",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
     },
