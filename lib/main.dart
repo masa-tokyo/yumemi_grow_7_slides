@@ -40,11 +40,16 @@ class MainApp extends StatelessWidget {
                   Text('isSkwasm: $isSkwasm'),
                   Text('isCanvasKit : $isCanvasKit'),
                   Text('isSkiaWeb: $isSkiaWeb'),
-                  Text('version: 9'),
+                  Text('version: 10'),
                   CachedNetworkImage(
                     imageUrl: _headerImageUrl,
                     // imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
-                    errorWidget: (_, __, ___) => const Text('error'),
+                    errorWidget: (_, __, ___) => const Text('error1'),
+                  ),
+                  CachedNetworkImage(
+                    imageUrl: 'https://placehold.jp/150x150.png',
+                    // imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+                    errorWidget: (_, __, ___) => const Text('error2'),
                   ),
                   Image.network(
                     'https://placehold.jp/150x150.png',
