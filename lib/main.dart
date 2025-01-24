@@ -38,6 +38,7 @@ class MainApp extends StatelessWidget {
                   Text('isSkwasm: $isSkwasm'),
                   Text('isCanvasKit : $isCanvasKit'),
                   Text('isSkiaWeb: $isSkiaWeb'),
+                  Text('now: ${DateTime.now()}'),
                 ],
               ),
             );
