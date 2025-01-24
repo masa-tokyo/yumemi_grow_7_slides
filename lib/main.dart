@@ -41,7 +41,7 @@ class MainApp extends StatelessWidget {
                   Text('isSkwasm: $isSkwasm'),
                   Text('isCanvasKit : $isCanvasKit'),
                   Text('isSkiaWeb: $isSkiaWeb'),
-                  Text('version: 6'),
+                  Text('version: 7'),
                   CachedNetworkImage(
                     imageUrl: _headerImageUrl,
                     imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
