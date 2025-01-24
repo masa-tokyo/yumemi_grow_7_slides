@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -41,10 +40,10 @@ class MainApp extends StatelessWidget {
                   Text('isSkwasm: $isSkwasm'),
                   Text('isCanvasKit : $isCanvasKit'),
                   Text('isSkiaWeb: $isSkiaWeb'),
-                  Text('version: 8'),
+                  Text('version: 9'),
                   CachedNetworkImage(
                     imageUrl: _headerImageUrl,
-                    imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+                    // imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
                     errorWidget: (_, __, ___) => const Text('error'),
                   ),
                   Image.network(
@@ -55,7 +54,7 @@ class MainApp extends StatelessWidget {
                   ),
                   ExtendedImage.network(
                     _headerImageUrl,
-                    headers: {'Authorization': 'Bearer your_token'},
+                    // headers: {'Authorization': 'Bearer your_token'},
                   ),
                 ],
               ),
