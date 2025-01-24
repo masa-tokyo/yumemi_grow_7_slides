@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:yumemi_grow_7_slides/slides/big_title_slide.dart';
 import 'package:yumemi_grow_7_slides/slides/blank_slide.dart';
 import 'package:yumemi_grow_7_slides/slides/split_slide.dart';
@@ -18,29 +19,35 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final body1 = TextStyle(fontSize: 32);
+    final body2 = TextStyle(fontSize: 16);
     final slides = [
       TitleSlide(
         route: '/title',
         title: 'wasmでFlutterをデプロイしてみる',
         subtitle: 'Masaki Sato',
       ),
-      // TODO(masaki): self introduction
       SplitSlide(
           route: '/self-intro',
           title: '自己紹介',
           leftBuilder: (_) {
             return DefaultTextStyle(
-              style: body1,
-              child: Column(
-                spacing: 16,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('・Flutter エンジニア（フリーランス）'),
-                  Text('・Codemagic \n記事執筆/コミュニティサポート'),
-                  Text('・イベント運営'),
-                ],
-              ),
-            );
+                style: body1,
+                child: MarkdownBody(
+                  data: '''
+  - Flutter エンジニア（フリーランス）
+  - Codemagic
+    - 記事執筆
+    - コミュニティサポート
+  - イベント運営
+    - FlutterGakkai ← 2/7(金)@西新宿！
+    - Tokyo Flutter Hackathon
+    - FlutterNinjas
+  ''',
+                  styleSheet: MarkdownStyleSheet(
+                    p: body1,
+                    listBullet: body2,
+                  ),
+                ));
           },
           rightBuilder: (_) {
             return Column(
