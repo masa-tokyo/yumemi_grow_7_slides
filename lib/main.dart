@@ -1,15 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:yumemi_grow_7_slides/slides/big_title_slide.dart';
 import 'package:yumemi_grow_7_slides/slides/blank_slide.dart';
+import 'package:yumemi_grow_7_slides/slides/image_slide.dart';
 import 'package:yumemi_grow_7_slides/slides/split_slide.dart';
 import 'package:yumemi_grow_7_slides/slides/title_slide.dart';
 
 void main() {
-  const isRunningWithWasm = bool.fromEnvironment('dart.tool.dart2wasm');
   // TODO(masaki): consider showing this on production or not
-  print('isRunningWithWasm: $isRunningWithWasm');
+  print('kIsWasm: $kIsWasm');
+  print('isSkwasm: $isSkwasm');
+  print('isCanvasKit : $isCanvasKit');
+  print('isSkiaWeb: $isSkiaWeb');
   runApp(const MainApp());
 }
 
@@ -21,9 +27,25 @@ class MainApp extends StatelessWidget {
     final body1 = TextStyle(fontSize: 32);
     final body2 = TextStyle(fontSize: 16);
     final slides = [
+      BlankSlide(
+          route: '/test',
+          title: 'test',
+          builder: (_) {
+            return Center(
+              child: Column(
+                children: [
+                  const Text('kIsWasm: $kIsWasm'),
+                  Text('isSkwasm: $isSkwasm'),
+                  Text('isCanvasKit : $isCanvasKit'),
+                  Text('isSkiaWeb: $isSkiaWeb'),
+                ],
+              ),
+            );
+          }),
       TitleSlide(
         route: '/title',
-        title: 'wasmでFlutterをデプロイしてみる',
+        title: 'レンダラーをwasmからhtmlに切り替えてみた',
+        // title: 'wasmでFlutterをデプロイしてみる',
         subtitle: 'Masaki Sato',
       ),
       SplitSlide(
@@ -62,17 +84,23 @@ class MainApp extends StatelessWidget {
               ],
             );
           }),
-      TitleSlide(
+      ImageSlide(
           route: '/fact-1',
-          title: 'wasmのパフォーマンス良くなってきているらしい by FlutterInProduction'),
+          title: '#FlutterInProduction',
+          imageBuilder: (_) => Image.asset('assets/flutter_in_production.png')),
       // TODO(masaki): add image of FlutterInProduction & check the performance in details
       // https://www.youtube.com/live/AEXIrThTgb0?si=BmTLG4feOAK6FC4M&t=1065
       BigFactSlide(route: '/comment-1', title: 'wasm良さそう'),
-      TitleSlide(route: '/fact-2', title: 'htmlレンダラー非推奨になった since 3.27'),
-      BigFactSlide(route: '/fact-2/1', title: '公式のページにももうhtmlは無い'),
+      ImageSlide(
+        route: '/fact-2',
+        title: 'htmlレンラダーが非推奨に',
+        imageBuilder: (_) => Image.asset(
+          'assets/html_renderer.png',
+        ),
+      ),
+      // TODO(masaki): (nice-to-have) check when the official document deleted
+      // BigFactSlide(route: '/fact-2/1', title: '公式のページにももうhtmlは無い'),
       // https://docs.flutter.dev/platform-integration/web/renderers
-      // TODO(masaki): add screenshot for html deprecation
-      // The HTML Renderer is deprecated. Do not use "--web-renderer=html".
       // See: https://docs.flutter.dev/to/web-html-renderer-deprecation
       BigFactSlide(route: '/comment-2', title: 'wasmやんなきゃ'),
       TitleSlide(route: '/definition', title: 'wasmとは'),
@@ -82,12 +110,51 @@ class MainApp extends StatelessWidget {
       BigFactSlide(route: '/definition/1', title: 'Web Assembly の略'),
       BigFactSlide(
           route: '/definition/2', title: 'バイナリ形式で吐き出されるプログラミング言語のコンパイル先'),
-      // TODO(masaki): (nice-to-have) compare wasm with html with some images
-      // TODO(masaki): check available browsers
+      SplitSlide(
+        route: '/definition/4',
+        title: 'wasm とは',
+        leftBuilder: (_) {
+          return DefaultTextStyle(
+            style: body1,
+            child: MarkdownBody(
+              data: '''
+  - Canvaskit レンダラー（デフォルト)
+  - html レンダラー(非推奨) 
+  - skwasm レンダラー → これにする
+  ''',
+              styleSheet: MarkdownStyleSheet(
+                p: body1,
+                listBullet: body2,
+              ),
+            ),
+          );
+        },
+        rightBuilder: (_) {
+          return Column(
+            children: [
+              Image.asset(
+                'assets/flutter_kaigi.png',
+              ),
+              Gap(8),
+              GestureDetector(
+                onTap: () {
+                  launchUrl(
+                      Uri(path: 'https://www.youtube.com/watch?v=YvWAAlLHg5Q'));
+                },
+                child: Text(
+                  'https://www.youtube.com/watch?v=YvWAAlLHg5Q',
+                  style: body2.copyWith(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+      // TODO(masaki): (nice-to-have) check available browsers
       // https://bema.jp/articles/20241025/#:~:text=Copy-,Skwasm%EF%BC%88Wasm%EF%BC%89,-Skwasm%EF%BC%88Wasm%EF%BC%89%E3%83%AC%E3%83%B3
       // https://docs.flutter.dev/platform-integration/web/wasm#learn-more-about-browser-compatibility
-      BigFactSlide(route: '/definition/3', title: 'html：テキスト'),
-      // TODO(masaki): introduce the FlutterKaigi session
       TitleSlide(route: '/implementation', title: '手順'),
       BigFactSlide(
           route: '/implementation-1',
