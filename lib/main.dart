@@ -47,7 +47,7 @@ class MainApp extends StatelessWidget {
                   Text('isCanvasKit : $isCanvasKit'),
                   Text('isSkiaWeb: $isSkiaWeb'),
                   Text('isHtml: $_isHtml'),
-                  Text('version: 11'),
+                  Text('version: 12'),
                   CachedNetworkImage(
                     imageUrl: _headerImageUrl,
                     imageRenderMethodForWeb: _isHtml
@@ -243,15 +243,8 @@ class MainApp extends StatelessWidget {
   ]
 ''',
           language: 'json'),
-
-      // TODO(masaki): (nice-to-have) explain how to check
-      // 1. bool.fromEnvironment('dart.tool.dart2wasm')
-      // 2. local web server
-      // https://docs.flutter.dev/deployment/web#building-the-app-for-release
-      // TODO(masaki): show expensive behaviors(maybe scroller)
       // show something like this debug view:
       // https://youtu.be/YvWAAlLHg5Q?si=fp3BJcVbOZrZkEz5&t=1546
-      // TODO(masaki): (nice-to-have) add build arguments(--html, --wasm, etc) on .idea runConfigurations
       BlankSlide(
         title: 'Expensive behavior',
         route: '/expensive-behavior',
@@ -260,12 +253,12 @@ class MainApp extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  Image.asset('assets/ramen_1.jpeg'),
-                  Image.asset('assets/ramen_2.jpeg'),
-                  Image.asset('assets/ramen_3.jpeg'),
-                  Image.asset('assets/ramen_4.jpeg'),
-                  Image.asset('assets/ramen_5.jpeg'),
-                  Image.asset('assets/ramen_6.jpeg'),
+                  Image.asset('assets/ramen_1.png'),
+                  Image.asset('assets/ramen_2.png'),
+                  Image.asset('assets/ramen_3.png'),
+                  Image.asset('assets/ramen_4.png'),
+                  Image.asset('assets/ramen_5.png'),
+                  Image.asset('assets/ramen_6.png'),
                 ],
               ),
             ),
