@@ -153,6 +153,20 @@ class MainApp extends StatelessWidget {
           );
         },
       ),
+      BlankSlide(
+          route: '/define-3',
+          title: '対応ブラウザ',
+          builder: (_) {
+            return Center(
+              child: Column(
+                children: [
+                  Image.asset('assets/browser_support.png'),
+                  const Gap(8),
+                  const Text('対応ブラウザでは無い場合、デフォルトのcanvaskitレンダラーになる'),
+                ],
+              ),
+            );
+          }),
       // TODO(masaki): (nice-to-have) check available browsers
       // https://bema.jp/articles/20241025/#:~:text=Copy-,Skwasm%EF%BC%88Wasm%EF%BC%89,-Skwasm%EF%BC%88Wasm%EF%BC%89%E3%83%AC%E3%83%B3
       // https://docs.flutter.dev/platform-integration/web/wasm#learn-more-about-browser-compatibility
