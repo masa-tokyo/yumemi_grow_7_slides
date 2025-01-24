@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
@@ -38,7 +40,11 @@ class MainApp extends StatelessWidget {
                   Text('isSkwasm: $isSkwasm'),
                   Text('isCanvasKit : $isCanvasKit'),
                   Text('isSkiaWeb: $isSkiaWeb'),
-                  Text('version: 3'),
+                  Text('version: 4'),
+                  CachedNetworkImage(
+                    imageUrl: _headerImageUrl,
+                  ),
+                  ExtendedImage.network(_headerImageUrl),
                 ],
               ),
             );
@@ -161,13 +167,23 @@ class MainApp extends StatelessWidget {
           route: '/implementation-1',
           title: '吐き出し自体は、flutter build web --wasm`で出来る'),
       // https://www.notion.so/masakisato/prep-for-Yumemi-grow-LT-168a4128da0f8019bb18e9c2770ca88e
-      // TODO(masaki): explain about header
-      TitleSlide(route: '/implementation-2', title: 'header'),
       ImageSlide(
           route: '/implementation-2',
           title: 'header',
-          imageBuilder: (_) => Image.network(
-              'https://firebasestorage.googleapis.com/v0/b/yumemi-grow-7-slides.firebasestorage.app/o/http_server.png?alt=media&token=3fa17425-76ad-4525-a126-ba58fff056bc')),
+          imageBuilder: (_) => Image.network(_headerImageUrl)),
+
+      ImageSlide(
+        route: '/implementation-3',
+        title: 'header',
+        imageBuilder: (context) => Image(
+          image: ExtendedNetworkImageProvider(
+            _headerImageUrl,
+            cache: true,
+          ),
+          fit: BoxFit.cover,
+        ),
+      ),
+
       // TODO(masaki): (nice-to-have) explain how to check
       // 1. bool.fromEnvironment('dart.tool.dart2wasm')
       // 2. local web server
@@ -223,3 +239,6 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+
+const _headerImageUrl =
+    'https://firebasestorage.googleapis.com/v0/b/yumemi-grow-7-slides.firebasestorage.app/o/http_server.png?alt=media&token=3fa17425-76ad-4525-a126-ba58fff056bc';
