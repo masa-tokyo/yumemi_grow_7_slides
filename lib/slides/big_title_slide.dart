@@ -14,9 +14,6 @@ class BigFactSlide extends FlutterDeckSlideWidget {
   }) : super(
           configuration: FlutterDeckSlideConfiguration(
             route: route,
-            // header: FlutterDeckHeaderConfiguration(
-            //   title: title,
-            // ),
           ),
         );
 

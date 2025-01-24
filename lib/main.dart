@@ -33,6 +33,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final body1 = TextStyle(fontSize: 32);
     final body2 = TextStyle(fontSize: 16);
+
     final slides = [
       TitleSlide(
         route: '/title',
@@ -154,7 +155,7 @@ class MainApp extends StatelessWidget {
         },
       ),
       BlankSlide(
-          route: '/define-3',
+          route: '/definition-3',
           title: '対応ブラウザ',
           builder: (_) {
             return Center(
@@ -167,9 +168,6 @@ class MainApp extends StatelessWidget {
               ),
             );
           }),
-      // TODO(masaki): (nice-to-have) check available browsers
-      // https://bema.jp/articles/20241025/#:~:text=Copy-,Skwasm%EF%BC%88Wasm%EF%BC%89,-Skwasm%EF%BC%88Wasm%EF%BC%89%E3%83%AC%E3%83%B3
-      // https://docs.flutter.dev/platform-integration/web/wasm#learn-more-about-browser-compatibility
       TitleSlide(route: '/implementation', title: '手順'),
       ImageSlide(
           route: '/implementation-1',
@@ -242,7 +240,7 @@ class MainApp extends StatelessWidget {
       // TODO(masaki): check how to deal with problems that html renderer was solving
       //  1. showing お豆腐 on loading
       // https://zenn.dev/tsuruo/articles/773a5a7ca14924#1.-canvaskit%E3%81%AE%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0%E6%96%B9%E6%B3%95%E3%81%A0%E3%81%A8%E3%80%81%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%E6%99%82%E3%81%AB%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%81%8C%E8%B1%86%E8%85%90%EF%BC%88%E2%96%A1%EF%BC%89%E3%81%AB%E3%81%AA%E3%82%8B
-      // 2. CORS issue for images(with ExtendedImage, image not showing) <- need to clarify why you need to cache on web
+      // 2. CORS issue for images(with ExtendedImage, image not showing)
       // https://zenn.dev/tsuruo/articles/773a5a7ca14924#1.-canvaskit%E3%81%AE%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0%E6%96%B9%E6%B3%95%E3%81%A0%E3%81%A8%E3%80%81%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%E6%99%82%E3%81%AB%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%81%8C%E8%B1%86%E8%85%90%EF%BC%88%E2%96%A1%EF%BC%89%E3%81%AB%E3%81%AA%E3%82%8B
       // https://docs.flutter.dev/platform-integration/web/web-images
       // TODO(masaki): (nice-to-have) explain how to clear previous cache
@@ -264,6 +262,7 @@ class MainApp extends StatelessWidget {
                   Text('isHtml: $_isHtml'),
                   Text('version: 13'),
                   if (_isHtml) ...[
+                    Text('Network images'),
                     CachedNetworkImage(
                       imageUrl: _headerImageUrl,
                       imageRenderMethodForWeb: _isHtml
@@ -299,7 +298,6 @@ class MainApp extends StatelessWidget {
       slides: List.generate(slides.length, (index) {
         return slides[index];
       }),
-
       configuration: FlutterDeckConfiguration(
           // possible to show the same header on all slides
           // header:
@@ -309,11 +307,6 @@ class MainApp extends StatelessWidget {
           //   showHeader: false,
           // ),
           ),
-      // speakerInfo: FlutterDeckSpeakerInfo(
-      //     name: 'Masaki Sato',
-      //     description: 'Flutter Freelance',
-      //     socialHandle: '@masa-tokyo',
-      //     imagePath: 'not-configured-yet'),
     );
   }
 }
