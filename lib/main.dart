@@ -253,8 +253,8 @@ class MainApp extends StatelessWidget {
       // https://youtu.be/YvWAAlLHg5Q?si=fp3BJcVbOZrZkEz5&t=1546
       // TODO(masaki): (nice-to-have) add build arguments(--html, --wasm, etc) on .idea runConfigurations
       BlankSlide(
-        title: 'Expensive behaviors',
-        route: '/expensive-behaviors',
+        title: 'Expensive behavior',
+        route: '/expensive-behavior',
         builder: (context) {
           return SingleChildScrollView(
             child: Center(
