@@ -28,8 +28,8 @@ class MainApp extends StatelessWidget {
     final body2 = TextStyle(fontSize: 16);
     final slides = [
       BlankSlide(
-          route: '/test',
-          title: 'test',
+          route: '/config',
+          title: 'config',
           builder: (_) {
             return Center(
               child: Column(
@@ -38,8 +38,7 @@ class MainApp extends StatelessWidget {
                   Text('isSkwasm: $isSkwasm'),
                   Text('isCanvasKit : $isCanvasKit'),
                   Text('isSkiaWeb: $isSkiaWeb'),
-                  Text('now: ${DateTime.now()}'),
-                  Text('version: 2'),
+                  Text('version: 3'),
                 ],
               ),
             );
@@ -164,6 +163,11 @@ class MainApp extends StatelessWidget {
       // https://www.notion.so/masakisato/prep-for-Yumemi-grow-LT-168a4128da0f8019bb18e9c2770ca88e
       // TODO(masaki): explain about header
       TitleSlide(route: '/implementation-2', title: 'header'),
+      ImageSlide(
+          route: '/implementation-2',
+          title: 'header',
+          imageBuilder: (_) => Image.network(
+              'https://firebasestorage.googleapis.com/v0/b/yumemi-grow-7-slides.firebasestorage.app/o/http_server.png?alt=media&token=3fa17425-76ad-4525-a126-ba58fff056bc')),
       // TODO(masaki): (nice-to-have) explain how to check
       // 1. bool.fromEnvironment('dart.tool.dart2wasm')
       // 2. local web server
