@@ -17,12 +17,11 @@ import 'package:yumemi_grow_7_slides/slides/title_slide.dart';
 final _isHtml = !isSkiaWeb;
 
 void main() {
-  // TODO(masaki): consider showing this on production or not
-  print('kIsWasm: $kIsWasm');
-  print('isSkwasm: $isSkwasm');
-  print('isCanvasKit : $isCanvasKit');
-  print('isSkiaWeb: $isSkiaWeb');
-  print('isHtml: $_isHtml');
+  debugPrint('kIsWasm: $kIsWasm');
+  debugPrint('isSkwasm: $isSkwasm');
+  debugPrint('isCanvasKit : $isCanvasKit');
+  debugPrint('isSkiaWeb: $isSkiaWeb');
+  debugPrint('isHtml: $_isHtml');
 
   runApp(const MainApp());
 }
@@ -89,7 +88,6 @@ class MainApp extends StatelessWidget {
         ),
       ),
       // TODO(masaki): (nice-to-have) check when the official document deleted
-      // BigFactSlide(route: '/fact-2/1', title: '公式のページにももうhtmlは無い'),
       // https://docs.flutter.dev/platform-integration/web/renderers
       // See: https://docs.flutter.dev/to/web-html-renderer-deprecation
       BigFactSlide(route: '/comment-2', title: 'wasmやんなきゃ'),
@@ -135,7 +133,6 @@ class MainApp extends StatelessWidget {
           );
         },
       ),
-
       BlankSlide(
         route: '/definition/2',
         title: 'レンダラーの種類',
