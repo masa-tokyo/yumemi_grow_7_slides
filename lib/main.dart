@@ -195,17 +195,14 @@ class MainApp extends StatelessWidget {
 ''',
           language: 'json'),
 
-      CodeHighlightSlide(
+      ImageSlide(
           route: '/implementation-3',
           title: '② コンパイル',
-          code: 'flutter build web --wasm',
-          language: 'shell'),
-      CodeHighlightSlide(
+          imageBuilder: (_) => Image.asset('assets/wasm_build.png')),
+      ImageSlide(
           route: '/implementation-4',
           title: '③ デプロイ',
-          code: 'firebase deploy --only hosting:wasm',
-          language: 'shell'),
-
+          imageBuilder: (_) => Image.asset('assets/wasm_deploy.png')),
       // show something like this debug view:
       // https://youtu.be/YvWAAlLHg5Q?si=fp3BJcVbOZrZkEz5&t=1546
       BlankSlide(
@@ -251,7 +248,7 @@ class MainApp extends StatelessWidget {
                   Text('isCanvasKit : $isCanvasKit'),
                   Text('isSkiaWeb: $isSkiaWeb'),
                   Text('isHtml: $_isHtml'),
-                  Text('version: 12'),
+                  Text('version: 13'),
                   if (_isHtml) ...[
                     CachedNetworkImage(
                       imageUrl: _headerImageUrl,
