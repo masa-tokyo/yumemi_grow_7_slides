@@ -35,51 +35,9 @@ class MainApp extends StatelessWidget {
     final body1 = TextStyle(fontSize: 32);
     final body2 = TextStyle(fontSize: 16);
     final slides = [
-      BlankSlide(
-          route: '/config',
-          title: 'config',
-          builder: (_) {
-            return Center(
-              child: Column(
-                children: [
-                  const Text('kIsWasm: $kIsWasm'),
-                  Text('isSkwasm: $isSkwasm'),
-                  Text('isCanvasKit : $isCanvasKit'),
-                  Text('isSkiaWeb: $isSkiaWeb'),
-                  Text('isHtml: $_isHtml'),
-                  Text('version: 12'),
-                  CachedNetworkImage(
-                    imageUrl: _headerImageUrl,
-                    imageRenderMethodForWeb: _isHtml
-                        ? ImageRenderMethodForWeb.HtmlImage
-                        : ImageRenderMethodForWeb.HttpGet,
-                    errorWidget: (_, __, ___) => const Text('error1'),
-                  ),
-                  CachedNetworkImage(
-                    imageUrl: 'https://placehold.jp/150x150.png',
-                    imageRenderMethodForWeb: _isHtml
-                        ? ImageRenderMethodForWeb.HtmlImage
-                        : ImageRenderMethodForWeb.HttpGet,
-                    errorWidget: (_, __, ___) => const Text('error2'),
-                  ),
-                  Image.network(
-                    'https://placehold.jp/150x150.png',
-                  ),
-                  Image.network(
-                    _headerImageUrl,
-                  ),
-                  ExtendedImage.network(
-                    _headerImageUrl,
-                    // headers: {'Authorization': 'Bearer your_token'},
-                  ),
-                ],
-              ),
-            );
-          }),
       TitleSlide(
         route: '/title',
-        title: 'レンダラーをwasmからhtmlに切り替えてみた',
-        // title: 'wasmでFlutterをデプロイしてみる',
+        title: 'wasm で Flutter Web をデプロイしてみる',
         subtitle: 'Masaki Sato',
       ),
       SplitSlide(
@@ -122,8 +80,6 @@ class MainApp extends StatelessWidget {
           route: '/fact-1',
           title: '#FlutterInProduction',
           imageBuilder: (_) => Image.asset('assets/flutter_in_production.png')),
-      // TODO(masaki): add image of FlutterInProduction & check the performance in details
-      // https://www.youtube.com/live/AEXIrThTgb0?si=BmTLG4feOAK6FC4M&t=1065
       BigFactSlide(route: '/comment-1', title: 'wasm良さそう'),
       ImageSlide(
         route: '/fact-2',
@@ -138,23 +94,16 @@ class MainApp extends StatelessWidget {
       // See: https://docs.flutter.dev/to/web-html-renderer-deprecation
       BigFactSlide(route: '/comment-2', title: 'wasmやんなきゃ'),
       TitleSlide(route: '/definition', title: 'wasmとは'),
-      // stable from 3.22
-      // at least 3.24 is recommended
-      // https://docs.flutter.dev/platform-integration/web/wasm#switch-to-the-latest-version-of-flutter
-      BigFactSlide(route: '/definition/1', title: 'Web Assembly の略'),
-      BigFactSlide(
-          route: '/definition/2', title: 'バイナリ形式で吐き出されるプログラミング言語のコンパイル先'),
       SplitSlide(
-        route: '/definition/4',
-        title: 'wasm とは',
+        route: '/definition/1',
+        title: 'wasmとは',
         leftBuilder: (_) {
           return DefaultTextStyle(
             style: body1,
             child: MarkdownBody(
               data: '''
-  - Canvaskit レンダラー（デフォルト)
-  - html レンダラー(非推奨) 
-  - skwasm レンダラー → これにする
+  - Web Assembly の略
+  - バイナリ形式で吐き出されるプログラミング言語のコンパイル先
   ''',
               styleSheet: MarkdownStyleSheet(
                 p: body1,
@@ -186,32 +135,37 @@ class MainApp extends StatelessWidget {
           );
         },
       ),
+
+      BlankSlide(
+        route: '/definition/2',
+        title: 'レンダラーの種類',
+        builder: (_) {
+          return DefaultTextStyle(
+            style: body1,
+            child: MarkdownBody(
+              data: '''
+  - Canvaskit レンダラー（デフォルト)
+  - html レンダラー(非推奨) 
+  - skwasm レンダラー → これにする
+  ''',
+              styleSheet: MarkdownStyleSheet(
+                p: body1,
+                listBullet: body2,
+              ),
+            ),
+          );
+        },
+      ),
       // TODO(masaki): (nice-to-have) check available browsers
       // https://bema.jp/articles/20241025/#:~:text=Copy-,Skwasm%EF%BC%88Wasm%EF%BC%89,-Skwasm%EF%BC%88Wasm%EF%BC%89%E3%83%AC%E3%83%B3
       // https://docs.flutter.dev/platform-integration/web/wasm#learn-more-about-browser-compatibility
       TitleSlide(route: '/implementation', title: '手順'),
-      BigFactSlide(
-          route: '/implementation-1',
-          title: '吐き出し自体は、flutter build web --wasm`で出来る'),
-      // https://www.notion.so/masakisato/prep-for-Yumemi-grow-LT-168a4128da0f8019bb18e9c2770ca88e
       ImageSlide(
-          route: '/implementation-2',
-          title: 'header',
+          route: '/implementation-1',
+          title: '① http header の設定',
           imageBuilder: (_) => Image.asset('assets/http_server.png')),
-
-      // ImageSlide(
-      //   route: '/implementation-X',
-      //   title: 'header',
-      //   imageBuilder: (context) => Image(
-      //     image: ExtendedNetworkImageProvider(
-      //       _headerImageUrl,
-      //       cache: true,
-      //     ),
-      //     fit: BoxFit.cover,
-      //   ),
-      // ),
       CodeHighlightSlide(
-          route: '/implementation-3',
+          route: '/implementation-2',
           title: 'firebase hosting の場合',
           backgroundBuilder: (_) {
             return ColoredBox(
@@ -243,6 +197,18 @@ class MainApp extends StatelessWidget {
   ]
 ''',
           language: 'json'),
+
+      CodeHighlightSlide(
+          route: '/implementation-3',
+          title: '② コンパイル',
+          code: 'flutter build web --wasm',
+          language: 'shell'),
+      CodeHighlightSlide(
+          route: '/implementation-4',
+          title: '③ デプロイ',
+          code: 'firebase deploy --only hosting:wasm',
+          language: 'shell'),
+
       // show something like this debug view:
       // https://youtu.be/YvWAAlLHg5Q?si=fp3BJcVbOZrZkEz5&t=1546
       BlankSlide(
@@ -265,7 +231,6 @@ class MainApp extends StatelessWidget {
           );
         },
       ),
-      // TODO(masaki): show how different, if possible
       // TODO(masaki): check how to deal with problems that html renderer was solving
       //  1. showing お豆腐 on loading
       // https://zenn.dev/tsuruo/articles/773a5a7ca14924#1.-canvaskit%E3%81%AE%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0%E6%96%B9%E6%B3%95%E3%81%A0%E3%81%A8%E3%80%81%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%E6%99%82%E3%81%AB%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%81%8C%E8%B1%86%E8%85%90%EF%BC%88%E2%96%A1%EF%BC%89%E3%81%AB%E3%81%AA%E3%82%8B
@@ -277,6 +242,49 @@ class MainApp extends StatelessWidget {
       // TODO(masaki): (nice-to-have) add some FAQ
       // https://docs.flutter.dev/platform-integration/web/faq
       TitleSlide(route: '/end', title: 'Thank you! 👋'),
+      BlankSlide(
+          route: '/config',
+          title: 'config',
+          builder: (_) {
+            return Center(
+              child: Column(
+                children: [
+                  const Text('kIsWasm: $kIsWasm'),
+                  Text('isSkwasm: $isSkwasm'),
+                  Text('isCanvasKit : $isCanvasKit'),
+                  Text('isSkiaWeb: $isSkiaWeb'),
+                  Text('isHtml: $_isHtml'),
+                  Text('version: 12'),
+                  if (_isHtml) ...[
+                    CachedNetworkImage(
+                      imageUrl: _headerImageUrl,
+                      imageRenderMethodForWeb: _isHtml
+                          ? ImageRenderMethodForWeb.HtmlImage
+                          : ImageRenderMethodForWeb.HttpGet,
+                      errorWidget: (_, __, ___) => const Text('error1'),
+                    ),
+                    CachedNetworkImage(
+                      imageUrl: 'https://placehold.jp/150x150.png',
+                      imageRenderMethodForWeb: _isHtml
+                          ? ImageRenderMethodForWeb.HtmlImage
+                          : ImageRenderMethodForWeb.HttpGet,
+                      errorWidget: (_, __, ___) => const Text('error2'),
+                    ),
+                    Image.network(
+                      'https://placehold.jp/150x150.png',
+                    ),
+                    Image.network(
+                      _headerImageUrl,
+                    ),
+                    ExtendedImage.network(
+                      _headerImageUrl,
+                      // headers: {'Authorization': 'Bearer your_token'},
+                    ),
+                  ],
+                ],
+              ),
+            );
+          }),
     ];
 
     return FlutterDeckApp(
