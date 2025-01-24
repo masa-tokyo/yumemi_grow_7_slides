@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 import 'package:yumemi_grow_7_slides/slides/big_title_slide.dart';
 import 'package:yumemi_grow_7_slides/slides/blank_slide.dart';
+import 'package:yumemi_grow_7_slides/slides/split_slide.dart';
 import 'package:yumemi_grow_7_slides/slides/title_slide.dart';
 
 void main() {
@@ -16,10 +17,44 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final body1 = TextStyle(fontSize: 32);
     final slides = [
-      TitleSlide(route: '/title', title: 'wasmでFlutterをデプロイしてみる'),
+      TitleSlide(
+        route: '/title',
+        title: 'wasmでFlutterをデプロイしてみる',
+        subtitle: 'Masaki Sato',
+      ),
       // TODO(masaki): self introduction
-      TitleSlide(route: '/self-intro', title: '自己紹介'),
+      SplitSlide(
+          route: '/self-intro',
+          title: '自己紹介',
+          leftBuilder: (_) {
+            return DefaultTextStyle(
+              style: body1,
+              child: Column(
+                spacing: 16,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('・Flutter エンジニア（フリーランス）'),
+                  Text('・Codemagic \n記事執筆/コミュニティサポート'),
+                  Text('・イベント運営'),
+                ],
+              ),
+            );
+          },
+          rightBuilder: (_) {
+            return Column(
+              children: [
+                Image.asset(
+                  'assets/profile.jpg',
+                ),
+                Text(
+                  'Masaki Sato',
+                  style: body1,
+                ),
+              ],
+            );
+          }),
       TitleSlide(
           route: '/fact-1',
           title: 'wasmのパフォーマンス良くなってきているらしい by FlutterInProduction'),
