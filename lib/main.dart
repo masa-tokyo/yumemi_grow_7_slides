@@ -46,7 +46,8 @@ class MainApp extends StatelessWidget {
                   Text('isSkwasm: $isSkwasm'),
                   Text('isCanvasKit : $isCanvasKit'),
                   Text('isSkiaWeb: $isSkiaWeb'),
-                  Text('version: 10'),
+                  Text('isHtml: $_isHtml'),
+                  Text('version: 11'),
                   CachedNetworkImage(
                     imageUrl: _headerImageUrl,
                     imageRenderMethodForWeb: _isHtml
@@ -196,7 +197,7 @@ class MainApp extends StatelessWidget {
       ImageSlide(
           route: '/implementation-2',
           title: 'header',
-          imageBuilder: (_) => Image.network(_headerImageUrl)),
+          imageBuilder: (_) => Image.asset('assets/http_server.png')),
 
       // ImageSlide(
       //   route: '/implementation-X',
@@ -212,16 +213,17 @@ class MainApp extends StatelessWidget {
       CodeHighlightSlide(
           route: '/implementation-3',
           title: 'firebase hosting の場合',
-          code: ''''
+          backgroundBuilder: (_) {
+            return ColoredBox(
+              color: Colors.grey[200]!,
+            );
+          },
+          fileName: 'firebase.json',
+          code: '''
   "hosting": [
     {
       "target": "wasm",
       "public": "build/web",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
       "headers": [
         {
           "source": "**/*",
@@ -238,7 +240,7 @@ class MainApp extends StatelessWidget {
         }
       ]
     }
-  ],
+  ]
 ''',
           language: 'json'),
 
@@ -254,9 +256,18 @@ class MainApp extends StatelessWidget {
         title: 'Expensive behaviors',
         route: '/expensive-behaviors',
         builder: (context) {
-          return Center(
-            child: Text(
-              'Expensive behaviors',
+          return SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  Image.asset('assets/ramen_1.jpeg'),
+                  Image.asset('assets/ramen_2.jpeg'),
+                  Image.asset('assets/ramen_3.jpeg'),
+                  Image.asset('assets/ramen_4.jpeg'),
+                  Image.asset('assets/ramen_5.jpeg'),
+                  Image.asset('assets/ramen_6.jpeg'),
+                ],
+              ),
             ),
           );
         },
