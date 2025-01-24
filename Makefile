@@ -13,3 +13,8 @@ host-html:
 host-canvaskit:
 	flutter build web --web-renderer canvaskit
 	firebase deploy --only hosting:canvaskit
+
+.PHONY: clean
+clean:
+	flutter clean
+	flutter pub get
